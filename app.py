@@ -7,7 +7,7 @@ import os
 from preprocess import preprocess_image
 
 app = Flask(__name__)
-model = tf.keras.models.load_model('my_model.h5')
+model = tf.keras.models.load_model('best_xception_model.keras')
 
 
 @app.route('/', methods=['GET'])
