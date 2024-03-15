@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+
 def preprocess_image(image):
     """
     Preprocess an image for the emotion detection model.
@@ -25,3 +26,4 @@ def preprocess_image(image):
     image = np.reshape(image, (1, *image.shape, 1))
 
     return image
+

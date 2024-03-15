@@ -7,11 +7,13 @@ import os
 from preprocess import preprocess_image
 
 app = Flask(__name__)
-model = tf.keras.models.load_model('emotion_detection_model.h5')
+model = tf.keras.models.load_model('my_model.h5')
+
 
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
+
 
 @app.route('/predict', methods=['POST'])
 def predict_emotion():
@@ -43,6 +45,7 @@ def get_metrics():
     # Replace the below line with actual loading mechanism
     metrics = {}  # Example: {"accuracy": 0.95, "f1_score": 0.94, ...}
     return jsonify(metrics)
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
