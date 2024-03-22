@@ -1,5 +1,3 @@
-Here's a sample README file for your project:
-
 # Emotion Detection using Xception and Flask
 
 This project aims to detect emotions from facial expressions using deep learning techniques. It utilizes the Xception model and transfer learning to classify emotions into seven categories: Angry, Disgust, Fear, Happy, Sad, Surprise, and Neutral. The model is trained on a large dataset of facial expressions (FER-2013) and can be used to predict emotions from uploaded images or real-time webcam feed through a Flask web application.
@@ -48,6 +46,10 @@ pip install -r requirements.txt
 
 The dataset used for training and testing the emotion detection model is not included in the repository due to its large size. However, you can find the link to the dataset in the `data/` folder. Download the dataset and place it in the appropriate directory before running the model.
 
+## Model Training
+
+To train the emotion detection model, you can run the `model.py` file or execute the cells in the `model.ipynb` notebook. The model architecture and training process are defined in these files. The trained model will be saved as `xception_model.h5`.
+
 ## Running the Application
 
 To run the Flask web application, follow these steps:
@@ -58,14 +60,8 @@ To run the Flask web application, follow these steps:
 
 You can upload an image for emotion detection or use the webcam feed for real-time emotion detection.
 
-## Model Training
-
-To train the emotion detection model, you can run the `model.py` file or execute the cells in the `model.ipynb` notebook. The model architecture and training process are defined in these files. The trained model will be saved as `xception_model.h5`.
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
 
 ---
-
-Feel free to customize the README file based on your specific project details and requirements.
