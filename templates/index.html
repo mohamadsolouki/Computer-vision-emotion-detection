@@ -1,42 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Emotion Detection</title>
-    <script>
-        function uploadAndAnalyze() {
-            var formData = new FormData();
-            var imageFile = document.getElementById("fileInput").files[0];
-            formData.append("file", imageFile);
-
-            fetch('/predict', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("result").textContent = "Detected Emotion: " + data.emotion;
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById("uploadedImage").src = e.target.result;
-                };
-                reader.readAsDataURL(imageFile);
-            })
-            .catch(error => console.error('Error:', error));
-            
-            return false; // Prevent page refresh
-        }
-    </script>
+    <title>Facial Expression Recognition</title>
 </head>
 <body>
-    <h1>Upload an Image for Emotion Detection</h1>
-    <form onsubmit="return uploadAndAnalyze()">
-        <input type="file" id="fileInput" name="file" required>
-        <input type="submit" value="Upload and Analyze">
+    <h1>Facial Expression Recognition</h1>
+    
+    <h2>Upload Image</h2>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="image">
+        <input type="submit" value="Predict">
     </form>
-    <h2>Result</h2>
-    <p id="result"></p>
-    <h2>Uploaded Image</h2>
-    <img id="uploadedImage" style="max-width: 500px;"/>
+    
+    <h2>Webcam Analysis</h2>
+    <form action="/webcam" method="get">
+        <input type="submit" value="Start Webcam Analysis">
+    </form>
+    
 </body>
 </html>

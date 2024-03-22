@@ -113,8 +113,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-.idea
-data/
-/logs
-best_xception_model.keras
 .vscode
+.idea
+/data
+/logs
+xception_model.h5
+best_xception_model.keras

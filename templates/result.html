@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction Result</title>
+</head>
+<body>
+    <h1>Prediction Result</h1>
+    
+    <p>Predicted Emotion: {{ emotion }}</p>
+    
+    <h2>Uploaded Image:</h2>
+    <img src="{{ url_for('serve_image', filename=img_path.split('/')[-1]) }}" alt="Uploaded Image">
+    
+    <h2>Probabilities:</h2>
+    <ul>
+        {% for label, prob in emotion_probs.items() %}
+            <li>{{ label }}: {{ prob }}</li>
+        {% endfor %}
+    </ul>
+    
+    <a href="/">Go back to home</a>
+</body>
+</html>
