@@ -1,6 +1,6 @@
 # Emotion Detection using Xception and Flask
 
-This project aims to detect emotions from facial expressions using deep learning techniques. It utilizes the Xception model and transfer learning to classify emotions into seven categories: Angry, Disgust, Fear, Happy, Sad, Surprise, and Neutral. The model is trained on a large dataset of facial expressions (FER-2013) and can be used to predict emotions from uploaded images or real-time webcam feed through a Flask web application.
+This project aims to detect emotions from facial expressions using deep learning techniques. It utilizes the Xception model and attention layer to classify emotions into seven categories: Angry, Disgust, Fear, Happy, Sad, Surprise, and Neutral. The model is trained on a dataset of facial expressions (FER-2013) and can be used to predict emotions from uploaded images or real-time webcam feed through a Flask web application.
 
 ## Project Structure
 
@@ -14,7 +14,7 @@ The project has the following structure:
 - `uploads/`: This folder stores the uploaded images for analysis in the web application.
 - `logs/`: This folder contains TensorFlow logs generated during model training. It is ignored in the repository but will be created when running the application.
 - `app.py`: The main Flask application file that handles routes, image uploads, and real-time emotion detection.
-- `model.py` and `model.ipynb`: These files contain the code for creating and training the emotion detection model using Xception and transfer learning.
+- `model.py` and `model.ipynb`: These files contain the code for creating and training the emotion detection model.
 - `requirements.txt`: The file listing the required Python dependencies for the project.
 - `.gitignore`: The file specifying files and directories to be ignored by Git.
 - `LICENSE`: The license file for the project.
