@@ -115,7 +115,8 @@ dmypy.json
 
 .vscode
 .idea
-/data
-/logs
+/data/test
+/data/train
+/logs/fit
 xception_model.h5
 best_xception_model.keras
