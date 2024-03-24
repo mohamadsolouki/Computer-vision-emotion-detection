@@ -1,17 +1,11 @@
 import os
 import numpy as np
-import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications import Xception
-from tensorflow.keras.layers import (
-    GlobalAveragePooling2D, Dense, Dropout, Input, Conv2D, BatchNormalization,
-    Activation, Add, Multiply, Flatten
-)
+from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, Dropout, Conv2D, BatchNormalization, Activation, Multiply
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import (
-    EarlyStopping, ReduceLROnPlateau, ModelCheckpoint, TensorBoard
-)
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau, ModelCheckpoint, TensorBoard
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.utils.class_weight import compute_class_weight
 import matplotlib.pyplot as plt

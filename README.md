@@ -26,7 +26,6 @@ Note: When running the model, two files named `best_xception_model.keras` and `x
 The project requires the following dependencies:
 
 - Python 3.x
-- TensorFlow
 - Keras
 - Pillow
 - NumPy
@@ -35,6 +34,7 @@ The project requires the following dependencies:
 - Streamlit
 - Scikit-learn
 - Matplotlib
+- Seaborn
 
 You can install the required dependencies using the following command:
 

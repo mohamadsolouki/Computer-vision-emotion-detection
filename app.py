@@ -4,6 +4,7 @@ import cv2
 from flask import Flask, render_template, request, Response, send_file
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
+from tensorflow.keras.preprocessing.image import img_to_array
 from io import BytesIO
 
 app = Flask(__name__)
@@ -17,6 +18,9 @@ emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutr
 # Define the image size expected by the model
 img_size = (71, 71)
 
+# Load OpenCV face detector model
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -24,9 +28,10 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'image' in request.files:
-        img = request.files['image']
-        img_path = 'uploads/' + img.filename
-        img.save(img_path)
+        file = request.files['image']  # Get the file from the request
+        filename = file.filename  # Save the filename
+        img_path = 'uploads/' + filename
+        file.save(img_path)  # Save the file to the filesystem
 
         # Preprocess the image
         img = image.load_img(img_path, target_size=img_size)
@@ -42,13 +47,25 @@ def predict():
         # Create a dictionary of emotion labels and their corresponding probabilities
         emotion_probs = {label: prob for label, prob in zip(emotion_labels, predicted_probs)}
 
-        return render_template('result.html', emotion=predicted_emotion, emotion_probs=emotion_probs, img_path=img_path)
+        # Detect face and draw rectangle and text on the image
+        orig_img = cv2.imread(img_path)
+        gray = cv2.cvtColor(orig_img, cv2.COLOR_BGR2GRAY)
+        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30), flags=cv2.CASCADE_SCALE_IMAGE)
+        for (x, y, w, h) in faces:
+            cv2.rectangle(orig_img, (x, y), (x+w, y+h), (0, 255, 0), 2)
+            cv2.putText(orig_img, predicted_emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+
+        # Save the image with rectangles
+        processed_img_path = 'uploads/processed_' + filename
+        cv2.imwrite(processed_img_path, orig_img)
+
+        return render_template('result.html', emotion=predicted_emotion, emotion_probs=emotion_probs, img_path=processed_img_path)
     
     return "No image uploaded"
 
-@app.route('/uploads/<path:filename>')
+@app.route('/uploads/<filename>')
 def serve_image(filename):
-    return send_file('uploads/' + filename, mimetype='image/jpeg')
+    return send_file(os.path.join('uploads', filename), mimetype='image/jpeg')
 
 @app.route('/webcam')
 def webcam():
@@ -61,22 +78,24 @@ def generate_frames():
         if not success:
             break
         else:
-            # Resize the frame to a larger size
-            frame = cv2.resize(frame, (400, 400))
+            # Detect face and draw rectangle and text on the frame
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30), flags=cv2.CASCADE_SCALE_IMAGE)
             
-            # Preprocess the frame
-            frame_array = cv2.resize(frame, img_size)
-            frame_array = np.expand_dims(frame_array, axis=0)
-            frame_array = frame_array.astype('float32') / 255.0
-            
-            # Make predictions
-            predictions = model.predict(frame_array)
-            predicted_probs = predictions[0]
-            
-            # Draw the predicted probabilities for each emotion on the frame
-            for i, (label, prob) in enumerate(zip(emotion_labels, predicted_probs)):
-                text = f"{label}: {prob:.2f}"
-                cv2.putText(frame, text, (10, 30 + i * 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            for (x, y, w, h) in faces:
+                face_frame = frame[y:y+h, x:x+w]
+                face_frame = cv2.resize(face_frame, img_size)
+                face_frame = face_frame.astype('float32') / 255.0
+                face_frame = np.expand_dims(face_frame, axis=0)
+                
+                # Make predictions
+                predictions = model.predict(face_frame)
+                predicted_probs = predictions[0]
+                predicted_emotion = emotion_labels[np.argmax(predicted_probs)]
+                
+                # Draw rectangle and text on the frame
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+                cv2.putText(frame, predicted_emotion, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
             
             ret, buffer = cv2.imencode('.jpg', frame)
             frame = buffer.tobytes()
