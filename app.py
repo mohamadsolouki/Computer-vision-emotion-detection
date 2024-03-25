@@ -4,22 +4,21 @@ import cv2
 from flask import Flask, render_template, request, Response, send_file
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
-from tensorflow.keras.preprocessing.image import img_to_array
-from io import BytesIO
+
 
 app = Flask(__name__)
 
-# Load the trained model
+
 model = load_model('xception_model.h5')
 
 # Define the emotion labels
-emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
+emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
 
 # Define the image size expected by the model
 img_size = (71, 71)
 
 # Load OpenCV face detector model
-face_cascade = cv2.CascadeClassifier('tempelates/haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
 @app.route('/')
 def index():

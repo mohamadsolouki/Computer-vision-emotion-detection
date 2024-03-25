@@ -342,7 +342,8 @@ def main():
         
     visualize_augmentation(train_datagen, original_img)
     visualize_misclassified_images(test_data, model, class_indices=test_data.class_indices)
-
+    # Save the model
+    model.save('xception_model.h5')
 
 if __name__ == '__main__':
     main()
