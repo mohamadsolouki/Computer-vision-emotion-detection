@@ -64,6 +64,10 @@ To run the Flask web application after, follow these steps:
 
 You can upload an image for emotion detection or use the webcam feed for real-time emotion detection.
 
+## Acknowledgments
+- The model utilizes the Xception architecture and CBAM for state-of-the-art emotion recognition.
+- This project was inspired by the FER-2013 dataset and its potential applications in real-world scenarios.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
