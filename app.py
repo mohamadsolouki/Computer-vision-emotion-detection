@@ -19,7 +19,7 @@ emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutr
 img_size = (71, 71)
 
 # Load OpenCV face detector model
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('tempelates/haarcascade_frontalface_default.xml')
 
 @app.route('/')
 def index():
