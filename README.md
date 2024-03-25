@@ -12,13 +12,13 @@ The project has the following structure:
   - `index.html`: The main page of the web application.
   - `result.html`: The page that displays the predicted emotion and probabilities for an uploaded image.
   - `webcam.html`: The page that captures real-time webcam feed and displays the predicted emotions.
-  - `haarcascade_frontalface_default.xml`: The Haar cascade file for face detection in the webcam feed.
 - `uploads/`: This folder stores the uploaded images for analysis in the web application.
 - `logs/`: This folder contains TensorFlow logs generated during model training. It is ignored in the repository but will be created when running the application.
 - `app.py`: The main Flask application file that handles routes, image uploads, and real-time emotion detection.
 - `model.py` and `model.ipynb`: These files contain the code for creating and training the emotion detection model.
 - `model.ipynb`: The Jupyter notebook version of the model training code.
 - `requirements.txt`: The file listing the required Python dependencies for the project.
+- `haarcascade_frontalface_default.xml`: The Haar cascade file for face detection in the webcam feed.
 - `.gitignore`: The file specifying files and directories to be ignored by Git.
 - `LICENSE`: The license file for the project.
 
